@@ -87,10 +87,11 @@ class OnboardingPage extends StatelessWidget {
                   onPressed: onPressed,
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.white.withOpacity(0.2),
-                    padding: const EdgeInsets.symmetric(horizontal: 80, vertical: 12),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 80, vertical: 12),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(30),
-                      side: const BorderSide(color: Colors.white, width: 1),
+                      side: const BorderSide(color: Colors.white, width: 2),
                     ),
                   ),
                   child: Text(

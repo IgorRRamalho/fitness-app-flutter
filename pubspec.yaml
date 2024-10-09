@@ -31,6 +31,10 @@ flutter:
     - lib/assets/icon2.svg
     - lib/assets/icon3.svg
     - lib/assets/main-image.png
+    - lib/assets/Arrow.svg
+    - lib/assets/fingerprint_icon.svg
+    - lib/assets/facebook_icon.svg
+    - lib/assets/google_icon.svg
 
   fonts:
     - family: Poppins
