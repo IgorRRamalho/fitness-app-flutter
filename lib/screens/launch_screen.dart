@@ -10,28 +10,26 @@ class _LaunchScreenState extends State<LaunchScreen> {
   @override
   void initState() {
     super.initState();
-    // Redireciona para a tela de onboarding após 3 segundos
+
     Future.delayed(const Duration(seconds: 3), () {
-      Navigator.of(context).pushReplacementNamed('/onboarding');
+      Navigator.of(context).pushReplacementNamed('/splash'); // Navega para a nova SplashScreen
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF232323), // Define o fundo da tela
+      backgroundColor: const Color(0xFF232323),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            // Logo SVG
             SvgPicture.asset(
-              'lib/assets/logofb.svg', // Caminho para o arquivo SVG da logo
+              'lib/assets/logofb.svg',
               width: 136,
               height: 63,
             ),
-            const SizedBox(height: 20), // Espaço entre a logo e o nome
-            // Nome SVG
+            const SizedBox(height: 20),
             SvgPicture.asset(
               'lib/assets/FITBODY.svg',
               width: 170,

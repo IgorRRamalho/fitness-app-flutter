@@ -30,6 +30,7 @@ flutter:
     - lib/assets/icon1.svg
     - lib/assets/icon2.svg
     - lib/assets/icon3.svg
+    - lib/assets/main-image.png
 
   fonts:
     - family: Poppins
@@ -78,3 +79,9 @@ flutter:
         - asset: lib/assets/fonts/Poppins-ThinItalic.ttf
           weight: 100
           style: italic
+
+    - family: LeagueSpartan
+      fonts:
+          - asset: lib/assets/fonts/LeagueSpartan-Regular.ttf
+          - asset: lib/assets/fonts/LeagueSpartan-Bold.ttf
+            weight: 700

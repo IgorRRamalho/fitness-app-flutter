@@ -4,8 +4,10 @@ import 'screens/onboarding_screen.dart';
 import 'screens/login_screen.dart';
 import 'screens/signup_screen.dart';
 import 'screens/forgot_password_screen.dart';
+import 'screens/splash_screen.dart'; // Importa a nova SplashScreen
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(const MyApp());
 }
 
@@ -19,42 +21,46 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: LaunchScreen(),
-      onGenerateRoute: (settings) {
-        switch (settings.name) {
-          case '/onboarding':
-            return _createRoute(const OnboardingScreen());
-          case '/login':
-            return _createRoute(const LoginScreen());
-          case '/signup':
-            return _createRoute(const SignUpScreen());
-          case '/forgotPassword':
-            return _createRoute(const ForgotPasswordScreen());
-          default:
-            return null;
-        }
-      },
+      home: LaunchScreen(), // A tela inicial agora será LaunchScreen
+      onGenerateRoute: _generateRoute,
     );
+  }
+
+  Route? _generateRoute(RouteSettings settings) {
+    final routes = <String, Widget>{
+      '/splash': const SplashScreen(), // Nova rota para a SplashScreen
+      '/onboarding': const OnboardingScreen(),
+      '/login': const LoginScreen(),
+      '/signup': const SignUpScreen(),
+      '/forgotPassword': const ForgotPasswordScreen(),
+    };
+
+    Widget? page = routes[settings.name];
+    if (page != null) {
+      return _createRoute(page);
+    }
+    return null;
   }
 
   Route _createRoute(Widget page) {
     return PageRouteBuilder(
       pageBuilder: (context, animation, secondaryAnimation) => page,
       transitionsBuilder: (context, animation, secondaryAnimation, child) {
-        const begin = Offset(0.0, 1.0); // Começa de baixo
-        const end = Offset.zero; // Termina na posição original
-        const curve = Curves.easeInOut; // Suaviza a animação
+        final offsetAnimation = Tween<Offset>(
+          begin: const Offset(0.0, 1.0),
+          end: Offset.zero,
+        ).animate(CurvedAnimation(
+          parent: animation,
+          curve: Curves.easeInOut,
+        ));
 
-        final tween = Tween<Offset>(begin: begin, end: end).chain(CurveTween(curve: curve));
-        final offsetAnimation = animation.drive(tween);
         final opacityAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
           CurvedAnimation(
             parent: animation,
-            curve: Curves.easeInOut, // Curva suave
+            curve: Curves.easeInOut,
           ),
         );
 
-        // Aumentando a duração da animação
         return SlideTransition(
           position: offsetAnimation,
           child: FadeTransition(
@@ -63,7 +69,7 @@ class MyApp extends StatelessWidget {
           ),
         );
       },
-      transitionDuration: const Duration(milliseconds: 500), // Aumenta a duração da animação
+      transitionDuration: const Duration(milliseconds: 400),
     );
   }
 }

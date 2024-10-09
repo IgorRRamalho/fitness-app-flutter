@@ -1,5 +1,4 @@
 import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -76,27 +75,27 @@ class OnboardingPage extends StatelessWidget {
           ),
         ),
         Positioned(
-          bottom: 290, 
+          bottom: 290,
           left: 0,
           right: 0,
           child: Center(
             child: ClipRRect(
-              borderRadius: BorderRadius.circular(30), 
+              borderRadius: BorderRadius.circular(30),
               child: BackdropFilter(
-                filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10), 
+                filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
                 child: ElevatedButton(
                   onPressed: onPressed,
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.white.withOpacity(0.2), 
+                    backgroundColor: Colors.white.withOpacity(0.2),
                     padding: const EdgeInsets.symmetric(horizontal: 80, vertical: 12),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(30),
-                      side: const BorderSide(color: Colors.white, width: 1), 
+                      side: const BorderSide(color: Colors.white, width: 1),
                     ),
                   ),
-                  child: const Text(
-                    'Next',
-                    style: TextStyle(
+                  child: Text(
+                    currentIndex == 2 ? 'Get Started' : 'Next',
+                    style: const TextStyle(
                       color: Colors.white,
                       fontFamily: 'Poppins',
                       fontWeight: FontWeight.w900,
@@ -108,8 +107,6 @@ class OnboardingPage extends StatelessWidget {
             ),
           ),
         ),
-
-
       ],
     );
   }
