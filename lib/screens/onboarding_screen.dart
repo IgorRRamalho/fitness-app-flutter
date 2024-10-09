@@ -1,41 +1,98 @@
 import 'package:flutter/material.dart';
 import 'onboarding_page.dart'; // Importar a página do onboarding
 
-class OnboardingScreen extends StatelessWidget {
-  const OnboardingScreen({super.key}); // O mesmo aqui, usando super.key
+class OnboardingScreen extends StatefulWidget {
+  const OnboardingScreen({super.key});
+
+  @override
+  OnboardingScreenState createState() => OnboardingScreenState();
+}
+
+class OnboardingScreenState extends State<OnboardingScreen> {
+  final PageController _pageController = PageController();
+  int _currentPage = 0;
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: PageView(
-        children: const [
-          // 'const' na lista
-          OnboardingPage(
-            title: 'Start Your Journey',
-            description: 'A More Active Lifestyle',
-            imageUrl: 'assets/image1.png',
-          ),
-          OnboardingPage(
-            title: 'Find Nutrition Tips',
-            description: 'That Fit Your Lifestyle',
-            imageUrl: 'assets/image2.png',
-          ),
-          OnboardingPage(
-            title: 'A Community for You',
-            description: 'Challenge Yourself',
-            imageUrl: 'assets/image3.png',
-          ),
-        ],
-      ),
-      bottomNavigationBar: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: ElevatedButton(
-          onPressed: () {
-            Navigator.pushNamed(context, '/login');
+    return WillPopScope( // Usando WillPopScope
+      onWillPop: () async {
+        if (_currentPage > 0) {
+          _pageController.previousPage(
+            duration: const Duration(milliseconds: 700),
+            curve: Curves.easeInOutCubic,
+          );
+          return false; // Não fecha a tela, apenas troca de página
+        }
+        return true; // Fecha a tela se estiver na primeira página
+      },
+      child: Scaffold(
+        body: PageView.builder(
+          controller: _pageController,
+          onPageChanged: (int page) {
+            setState(() {
+              _currentPage = page;
+            });
           },
-          child: const Text('Get Started'), // 'const' aqui
+          physics: const NeverScrollableScrollPhysics(),
+          itemCount: 3,
+          itemBuilder: (context, index) {
+            return OnboardingPage(
+              title: _getTitle(index),
+              imageUrl: _getImageUrl(index),
+              iconPath: _getIconPath(index),
+              onPressed: _nextOrGetStarted,
+              currentIndex: _currentPage,
+            );
+          },
         ),
       ),
     );
+  }
+
+  void _nextOrGetStarted() {
+    if (_currentPage < 2) {
+      _pageController.nextPage(
+        duration: const Duration(milliseconds: 700),
+        curve: Curves.easeInOutCubic,
+      );
+    } else {
+      Navigator.pushNamed(context, '/login');
+    }
+  }
+
+  String _getTitle(int index) {
+    switch (index) {
+      case 0:
+        return 'Start Your Journey Towards A More Active Lifestyle';
+      case 1:
+        return 'Find Nutrition Tips That Fit Your Lifestyle';
+      case 2:
+      default:
+        return 'A Community For You, Challenge Yourself';
+    }
+  }
+
+  String _getImageUrl(int index) {
+    switch (index) {
+      case 0:
+        return 'lib/assets/image1.png';
+      case 1:
+        return 'lib/assets/image2.png';
+      case 2:
+      default:
+        return 'lib/assets/image3.png';
+    }
+  }
+
+  String _getIconPath(int index) {
+    switch (index) {
+      case 0:
+        return 'lib/assets/icon1.svg';
+      case 1:
+        return 'lib/assets/icon2.svg';
+      case 2:
+      default:
+        return 'lib/assets/icon3.svg';
+    }
   }
 }

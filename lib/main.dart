@@ -19,13 +19,51 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const LaunchScreen(),
-      routes: {
-        '/onboarding': (context) => const OnboardingScreen(),
-        '/login': (context) => const LoginScreen(),
-        '/signup': (context) => const SignUpScreen(),
-        '/forgotPassword': (context) => const ForgotPasswordScreen(),
+      home: LaunchScreen(),
+      onGenerateRoute: (settings) {
+        switch (settings.name) {
+          case '/onboarding':
+            return _createRoute(const OnboardingScreen());
+          case '/login':
+            return _createRoute(const LoginScreen());
+          case '/signup':
+            return _createRoute(const SignUpScreen());
+          case '/forgotPassword':
+            return _createRoute(const ForgotPasswordScreen());
+          default:
+            return null;
+        }
       },
+    );
+  }
+
+  Route _createRoute(Widget page) {
+    return PageRouteBuilder(
+      pageBuilder: (context, animation, secondaryAnimation) => page,
+      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+        const begin = Offset(0.0, 1.0); // Começa de baixo
+        const end = Offset.zero; // Termina na posição original
+        const curve = Curves.easeInOut; // Suaviza a animação
+
+        final tween = Tween<Offset>(begin: begin, end: end).chain(CurveTween(curve: curve));
+        final offsetAnimation = animation.drive(tween);
+        final opacityAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
+          CurvedAnimation(
+            parent: animation,
+            curve: Curves.easeInOut, // Curva suave
+          ),
+        );
+
+        // Aumentando a duração da animação
+        return SlideTransition(
+          position: offsetAnimation,
+          child: FadeTransition(
+            opacity: opacityAnimation,
+            child: child,
+          ),
+        );
+      },
+      transitionDuration: const Duration(milliseconds: 500), // Aumenta a duração da animação
     );
   }
 }
