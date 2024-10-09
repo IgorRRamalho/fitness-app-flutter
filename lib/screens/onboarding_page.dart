@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -30,10 +32,9 @@ class OnboardingPage extends StatelessWidget {
         Center(
           child: RepaintBoundary(
             child: Container(
-              padding: const EdgeInsets.all(20),
+              padding: const EdgeInsets.all(15),
               decoration: BoxDecoration(
                 color: const Color(0xFFB3A0FF),
-                borderRadius: BorderRadius.circular(10),
                 boxShadow: [
                   BoxShadow(
                     color: Colors.black.withOpacity(0.3),
@@ -54,7 +55,7 @@ class OnboardingPage extends StatelessWidget {
                       BlendMode.srcIn,
                     ),
                   ),
-                  const SizedBox(height: 5),
+                  const SizedBox(height: 1),
                   Text(
                     title,
                     style: const TextStyle(
@@ -69,31 +70,46 @@ class OnboardingPage extends StatelessWidget {
                   const SizedBox(height: 10),
                   _buildIndicator(),
                   const SizedBox(height: 30),
-                  ElevatedButton(
-                    onPressed: onPressed,
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.white,
-                      padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 15),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(30),
-                      ),
-                    ),
-                    child: const Text(
-                      'Next',
-                      style: TextStyle(
-                        color: Colors.purple,
-                        fontFamily: 'Poppins',
-                        fontWeight: FontWeight.w900,
-                        fontSize: 18,
-                        height: 27 / 18,
-                      ),
-                    ),
-                  ),
                 ],
               ),
             ),
           ),
         ),
+        Positioned(
+          bottom: 290, 
+          left: 0,
+          right: 0,
+          child: Center(
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(30), 
+              child: BackdropFilter(
+                filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10), 
+                child: ElevatedButton(
+                  onPressed: onPressed,
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.white.withOpacity(0.2), 
+                    padding: const EdgeInsets.symmetric(horizontal: 80, vertical: 12),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30),
+                      side: const BorderSide(color: Colors.white, width: 1), 
+                    ),
+                  ),
+                  child: const Text(
+                    'Next',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontFamily: 'Poppins',
+                      fontWeight: FontWeight.w900,
+                      fontSize: 18,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
+
+
       ],
     );
   }

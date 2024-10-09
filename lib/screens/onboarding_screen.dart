@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'onboarding_page.dart'; // Importar a página do onboarding
+import 'onboarding_page.dart'; 
 
 class OnboardingScreen extends StatefulWidget {
   const OnboardingScreen({super.key});
@@ -14,16 +14,16 @@ class OnboardingScreenState extends State<OnboardingScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope( // Usando WillPopScope
+    return WillPopScope( 
       onWillPop: () async {
         if (_currentPage > 0) {
           _pageController.previousPage(
             duration: const Duration(milliseconds: 700),
             curve: Curves.easeInOutCubic,
           );
-          return false; // Não fecha a tela, apenas troca de página
+          return false; 
         }
-        return true; // Fecha a tela se estiver na primeira página
+        return true; 
       },
       child: Scaffold(
         body: PageView.builder(
