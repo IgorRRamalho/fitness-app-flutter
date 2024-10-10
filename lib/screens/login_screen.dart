@@ -19,17 +19,36 @@ class _LoginScreenState extends State<LoginScreen> {
     final email = _emailController.text;
     final password = _passwordController.text;
 
+    // Validação de email
+    if (!_isValidEmail(email)) {
+      _showDialog('Email inválido', 'Por favor, insira um email válido.');
+      return;
+    }
+
+    // Validação de senha
+    if (password.isEmpty) {
+      _showDialog('Senha inválida', 'A senha não pode estar vazia.');
+      return;
+    }
+
     print('Email: $email');
     print('Senha: $password');
 
-    bool userExists =
-        await _userStorageService.checkUserExists(email, password);
+    bool userExists = await _userStorageService.checkUserExists(email, password);
+    String title = userExists ? 'Usuário existe' : 'Usuário não encontrado';
+    String content = userExists ? 'Login bem-sucedido!' : 'Verifique suas credenciais.';
 
-    if (userExists) {
-      _showDialog('Usuário existe', 'Login bem-sucedido!');
-    } else {
-      _showDialog('Usuário não encontrado', 'Verifique suas credenciais.');
-    }
+    _showDialog(title, content);
+  }
+
+  bool _isValidEmail(String email) {
+    // Regex para validação de email
+    final RegExp emailRegExp = RegExp(
+      r'^[^@]+@[^@]+\.[^@]+',
+      caseSensitive: false,
+      multiLine: false,
+    );
+    return emailRegExp.hasMatch(email);
   }
 
   void _showDialog(String title, String content) {
@@ -45,6 +64,48 @@ class _LoginScreenState extends State<LoginScreen> {
           ),
         ],
       ),
+    );
+  }
+
+  Widget _buildTextField(String label, TextEditingController controller, {bool obscureText = false}) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          label,
+          style: const TextStyle(
+            fontFamily: 'League Spartan',
+            fontWeight: FontWeight.w500,
+            fontSize: 18,
+            color: Color(0xFF232323),
+          ),
+        ),
+        const SizedBox(height: 5),
+        SizedBox(
+          height: 45,
+          child: TextFormField(
+            controller: controller,
+            obscureText: obscureText,
+            decoration: InputDecoration(
+              filled: true,
+              fillColor: Colors.white,
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(15),
+                borderSide: BorderSide.none,
+              ),
+              hintText: obscureText ? '*************' : 'example@example.com',
+              hintStyle: const TextStyle(
+                color: Color(0xB3232323),
+                fontWeight: FontWeight.w400,
+                fontSize: 16,
+                fontFamily: 'Poppins',
+              ),
+              contentPadding: const EdgeInsets.symmetric(horizontal: 10),
+            ),
+          ),
+        ),
+        const SizedBox(height: 15),
+      ],
     );
   }
 
@@ -68,9 +129,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       Align(
                         alignment: Alignment.centerLeft,
                         child: GestureDetector(
-                          onTap: () {
-                            Navigator.pop(context);
-                          },
+                          onTap: () => Navigator.pop(context),
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: SvgPicture.asset(
@@ -136,87 +195,12 @@ class _LoginScreenState extends State<LoginScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  const Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                      'Username or email',
-                      style: TextStyle(
-                        fontFamily: 'League Spartan',
-                        fontWeight: FontWeight.w500,
-                        fontSize: 18,
-                        color: Color(0xFF232323),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 5),
-                  SizedBox(
-                    height: 45,
-                    child: TextFormField(
-                      controller: _emailController,
-                      decoration: InputDecoration(
-                        filled: true,
-                        fillColor: Colors.white,
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(15),
-                          borderSide: BorderSide.none,
-                        ),
-                        hintText: 'example@example.com',
-                        hintStyle: const TextStyle(
-                          color: Color(0xB3232323),
-                          fontWeight: FontWeight.w400,
-                          fontSize: 16,
-                          fontFamily: 'Poppins',
-                        ),
-                        contentPadding:
-                            const EdgeInsets.symmetric(horizontal: 10),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 15),
-                  const Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                      'Password',
-                      style: TextStyle(
-                        fontFamily: 'League Spartan',
-                        fontWeight: FontWeight.w500,
-                        fontSize: 18,
-                        color: Color(0xFF232323),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 5),
-                  SizedBox(
-                    height: 45,
-                    child: TextFormField(
-                      controller: _passwordController,
-                      decoration: InputDecoration(
-                        filled: true,
-                        fillColor: Colors.white,
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(15),
-                          borderSide: BorderSide.none,
-                        ),
-                        hintText: '*************',
-                        hintStyle: const TextStyle(
-                          color: Color(0xB3232323),
-                          fontWeight: FontWeight.w400,
-                          fontSize: 16,
-                          fontFamily: 'Poppins',
-                        ),
-                        contentPadding:
-                            const EdgeInsets.symmetric(horizontal: 10),
-                      ),
-                      obscureText: true,
-                    ),
-                  ),
-                  const SizedBox(height: 10),
+                  _buildTextField('Username or email', _emailController),
+                  _buildTextField('Password', _passwordController, obscureText: true),
                   Align(
                     alignment: Alignment.centerRight,
                     child: GestureDetector(
-                      onTap: () {
-                        Navigator.pushNamed(context, '/forgotPassword');
-                      },
+                      onTap: () => Navigator.pushNamed(context, '/forgotPassword'),
                       child: const Text(
                         'Forgot Password?',
                         style: TextStyle(
@@ -281,30 +265,9 @@ class _LoginScreenState extends State<LoginScreen> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      IconButton(
-                        icon: SvgPicture.asset(
-                          'lib/assets/google_icon.svg',
-                          width: 34,
-                          height: 34,
-                        ),
-                        onPressed: () {},
-                      ),
-                      IconButton(
-                        icon: SvgPicture.asset(
-                          'lib/assets/facebook_icon.svg',
-                          width: 34,
-                          height: 34,
-                        ),
-                        onPressed: () {},
-                      ),
-                      IconButton(
-                        icon: SvgPicture.asset(
-                          'lib/assets/fingerprint_icon.svg',
-                          width: 34,
-                          height: 34,
-                        ),
-                        onPressed: () {},
-                      ),
+                      _socialIcon('lib/assets/google_icon.svg'),
+                      _socialIcon('lib/assets/facebook_icon.svg'),
+                      _socialIcon('lib/assets/fingerprint_icon.svg'),
                     ],
                   ),
                   const SizedBox(height: 20),
@@ -320,9 +283,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                       ),
                       TextButton(
-                        onPressed: () {
-                          Navigator.pushNamed(context, '/signup');
-                        },
+                        onPressed: () => Navigator.pushNamed(context, '/signup'),
                         child: const Text(
                           'Sign Up',
                           style: TextStyle(
@@ -340,6 +301,17 @@ class _LoginScreenState extends State<LoginScreen> {
           ),
         ],
       ),
+    );
+  }
+
+  Widget _socialIcon(String assetPath) {
+    return IconButton(
+      icon: SvgPicture.asset(
+        assetPath,
+        width: 34,
+        height: 34,
+      ),
+      onPressed: () {},
     );
   }
 }

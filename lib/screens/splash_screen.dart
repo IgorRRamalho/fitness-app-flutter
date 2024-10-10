@@ -12,7 +12,10 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
+    _navigateToOnboarding();
+  }
 
+  void _navigateToOnboarding() {
     Future.delayed(const Duration(seconds: 3), () {
       Navigator.pushReplacementNamed(context, '/onboarding');
     });
@@ -24,44 +27,56 @@ class _SplashScreenState extends State<SplashScreen> {
       backgroundColor: const Color(0xFF232323),
       body: Stack(
         children: [
-          Positioned.fill(
-            child: Image.asset(
-              'lib/assets/main-image.png',
-              fit: BoxFit.cover,
+          _buildBackgroundImage(),
+          _buildOverlay(),
+          _buildCenterContent(),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildBackgroundImage() {
+    return Positioned.fill(
+      child: Image.asset(
+        'lib/assets/main-image.png',
+        fit: BoxFit.cover,
+      ),
+    );
+  }
+
+  Widget _buildOverlay() {
+    return Positioned.fill(
+      child: Container(
+        color: Colors.black.withOpacity(0.5),
+      ),
+    );
+  }
+
+  Widget _buildCenterContent() {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          const Text(
+            'Welcome to',
+            style: TextStyle(
+              fontSize: 26,
+              fontWeight: FontWeight.w700,
+              color: Color(0xFFE2F163),
+              fontFamily: 'LeagueSpartan',
             ),
           ),
-          Positioned.fill(
-            child: Container(
-              color: Colors.black.withOpacity(0.5),
-            ),
+          const SizedBox(height: 10),
+          SvgPicture.asset(
+            'lib/assets/logofb.svg',
+            width: 182.37,
+            height: 84.76,
           ),
-          Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Text(
-                  'Welcome to',
-                  style: TextStyle(
-                    fontSize: 26,
-                    fontWeight: FontWeight.w700,
-                    color: Color(0xFFE2F163),
-                    fontFamily: 'LeagueSpartan',
-                  ),
-                ),
-                const SizedBox(height: 10),
-                SvgPicture.asset(
-                  'lib/assets/logofb.svg',
-                  width: 182.37,
-                  height: 84.76,
-                ),
-                const SizedBox(height: 20),
-                SvgPicture.asset(
-                  'lib/assets/FITBODY.svg',
-                  width: 100,
-                  height: 40,
-                ),
-              ],
-            ),
+          const SizedBox(height: 20),
+          SvgPicture.asset(
+            'lib/assets/FITBODY.svg',
+            width: 100,
+            height: 40,
           ),
         ],
       ),

@@ -29,48 +29,46 @@ class OnboardingPage extends StatelessWidget {
           ),
         ),
         Center(
-          child: RepaintBoundary(
-            child: Container(
-              padding: const EdgeInsets.all(15),
-              decoration: BoxDecoration(
-                color: const Color(0xFFB3A0FF),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withOpacity(0.3),
-                    blurRadius: 10,
-                    offset: const Offset(0, 4),
+          child: Container(
+            padding: const EdgeInsets.all(15),
+            decoration: BoxDecoration(
+              color: const Color(0xFFB3A0FF),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.3),
+                  blurRadius: 10,
+                  offset: const Offset(0, 4),
+                ),
+              ],
+            ),
+            width: double.infinity,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                SvgPicture.asset(
+                  iconPath,
+                  height: 43,
+                  colorFilter: const ColorFilter.mode(
+                    Color(0xFFE2F163),
+                    BlendMode.srcIn,
                   ),
-                ],
-              ),
-              width: double.infinity,
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  SvgPicture.asset(
-                    iconPath,
-                    height: 43,
-                    colorFilter: const ColorFilter.mode(
-                      Color(0xFFE2F163),
-                      BlendMode.srcIn,
-                    ),
+                ),
+                const SizedBox(height: 1),
+                Text(
+                  title,
+                  style: const TextStyle(
+                    fontFamily: 'Poppins',
+                    fontSize: 22,
+                    fontWeight: FontWeight.w700,
+                    height: 1.5,
+                    color: Colors.white,
                   ),
-                  const SizedBox(height: 1),
-                  Text(
-                    title,
-                    style: const TextStyle(
-                      fontFamily: 'Poppins',
-                      fontSize: 22,
-                      fontWeight: FontWeight.w700,
-                      height: 30 / 20,
-                      color: Colors.white,
-                    ),
-                    textAlign: TextAlign.center,
-                  ),
-                  const SizedBox(height: 10),
-                  _buildIndicator(),
-                  const SizedBox(height: 30),
-                ],
-              ),
+                  textAlign: TextAlign.center,
+                ),
+                const SizedBox(height: 10),
+                _buildIndicator(),
+                const SizedBox(height: 30),
+              ],
             ),
           ),
         ),
@@ -87,8 +85,7 @@ class OnboardingPage extends StatelessWidget {
                   onPressed: onPressed,
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.white.withOpacity(0.2),
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 80, vertical: 12),
+                    padding: const EdgeInsets.symmetric(horizontal: 80, vertical: 12),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(30),
                       side: const BorderSide(color: Colors.white, width: 2),

@@ -13,31 +13,29 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  const MyApp({Key? key}) : super(key: key);
+
+  static const Map<String, Widget> _routes = {
+    '/splash': SplashScreen(),
+    '/onboarding': OnboardingScreen(),
+    '/login': LoginScreen(),
+    '/signup': SignUpScreen(),
+    '/forgotPassword': ForgotPasswordScreen(),
+    '/setPassword': SetPasswordScreen(),
+  };
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'FitBody App',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
+      theme: ThemeData(primarySwatch: Colors.blue),
       home: LaunchScreen(),
       onGenerateRoute: _generateRoute,
     );
   }
 
   Route? _generateRoute(RouteSettings settings) {
-    final routes = <String, Widget>{
-      '/splash': const SplashScreen(),
-      '/onboarding': const OnboardingScreen(),
-      '/login': const LoginScreen(),
-      '/signup': const SignUpScreen(),
-      '/forgotPassword': const ForgotPasswordScreen(),
-      '/setPassword': const SetPasswordScreen(),
-    };
-
-    Widget? page = routes[settings.name];
+    final Widget? page = _routes[settings.name];
     if (page != null) {
       return _createRoute(page);
     }
@@ -48,20 +46,17 @@ class MyApp extends StatelessWidget {
     return PageRouteBuilder(
       pageBuilder: (context, animation, secondaryAnimation) => page,
       transitionsBuilder: (context, animation, secondaryAnimation, child) {
+        const curve = Curves.easeInOut;
+
         final offsetAnimation = Tween<Offset>(
           begin: const Offset(0.0, 1.0),
           end: Offset.zero,
-        ).animate(CurvedAnimation(
-          parent: animation,
-          curve: Curves.easeInOut,
-        ));
+        ).animate(CurvedAnimation(parent: animation, curve: curve));
 
-        final opacityAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
-          CurvedAnimation(
-            parent: animation,
-            curve: Curves.easeInOut,
-          ),
-        );
+        final opacityAnimation = Tween<double>(
+          begin: 0.0,
+          end: 1.0,
+        ).animate(CurvedAnimation(parent: animation, curve: curve));
 
         return SlideTransition(
           position: offsetAnimation,
