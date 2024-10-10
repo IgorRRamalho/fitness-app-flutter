@@ -12,8 +12,7 @@ class _LaunchScreenState extends State<LaunchScreen> {
     super.initState();
 
     Future.delayed(const Duration(seconds: 3), () {
-      Navigator.of(context)
-          .pushReplacementNamed('/splash'); // Navega para a nova SplashScreen
+      Navigator.of(context).pushReplacementNamed('/splash');
     });
   }
 

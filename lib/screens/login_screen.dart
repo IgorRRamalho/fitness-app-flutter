@@ -1,12 +1,57 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
-class LoginScreen extends StatelessWidget {
+import '../services/UserStorageService.dart';
+
+class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
+
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  final UserStorageService _userStorageService = UserStorageService();
+
+  void _login() async {
+    final email = _emailController.text;
+    final password = _passwordController.text;
+
+    print('Email: $email');
+    print('Senha: $password');
+
+    bool userExists =
+        await _userStorageService.checkUserExists(email, password);
+
+    if (userExists) {
+      _showDialog('Usuário existe', 'Login bem-sucedido!');
+    } else {
+      _showDialog('Usuário não encontrado', 'Verifique suas credenciais.');
+    }
+  }
+
+  void _showDialog(String title, String content) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text(title),
+        content: Text(content),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(),
+            child: const Text('Fechar'),
+          ),
+        ],
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: Column(
         children: [
           Expanded(
@@ -24,12 +69,10 @@ class LoginScreen extends StatelessWidget {
                         alignment: Alignment.centerLeft,
                         child: GestureDetector(
                           onTap: () {
-                            Navigator.pop(
-                                context); // Volta para a página anterior
+                            Navigator.pop(context);
                           },
                           child: Padding(
-                            padding: const EdgeInsets.all(
-                                8.0), // Ajuste o valor conforme necessário
+                            padding: const EdgeInsets.all(8.0),
                             child: SvgPicture.asset(
                               'lib/assets/Arrow.svg',
                               width: 6,
@@ -109,6 +152,7 @@ class LoginScreen extends StatelessWidget {
                   SizedBox(
                     height: 45,
                     child: TextFormField(
+                      controller: _emailController,
                       decoration: InputDecoration(
                         filled: true,
                         fillColor: Colors.white,
@@ -145,6 +189,7 @@ class LoginScreen extends StatelessWidget {
                   SizedBox(
                     height: 45,
                     child: TextFormField(
+                      controller: _passwordController,
                       decoration: InputDecoration(
                         filled: true,
                         fillColor: Colors.white,
@@ -162,6 +207,7 @@ class LoginScreen extends StatelessWidget {
                         contentPadding:
                             const EdgeInsets.symmetric(horizontal: 10),
                       ),
+                      obscureText: true,
                     ),
                   ),
                   const SizedBox(height: 10),
@@ -182,7 +228,6 @@ class LoginScreen extends StatelessWidget {
                       ),
                     ),
                   ),
-
                 ],
               ),
             ),
@@ -206,7 +251,7 @@ class LoginScreen extends StatelessWidget {
                       shadowColor: Colors.transparent,
                       elevation: 0,
                     ),
-                    onPressed: () {},
+                    onPressed: _login,
                     child: const Center(
                       child: Text(
                         'Log In',
@@ -276,8 +321,7 @@ class LoginScreen extends StatelessWidget {
                       ),
                       TextButton(
                         onPressed: () {
-                          Navigator.pushNamed(context,
-                              '/signup'); // Navega para a tela de signup
+                          Navigator.pushNamed(context, '/signup');
                         },
                         child: const Text(
                           'Sign Up',

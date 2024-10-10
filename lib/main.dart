@@ -4,7 +4,8 @@ import 'screens/onboarding_screen.dart';
 import 'screens/login_screen.dart';
 import 'screens/signup_screen.dart';
 import 'screens/forgot_password_screen.dart';
-import 'screens/splash_screen.dart'; // Importa a nova SplashScreen
+import 'screens/splash_screen.dart';
+import 'screens/setpassword_screen.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -21,18 +22,19 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: LaunchScreen(), // A tela inicial agora será LaunchScreen
+      home: LaunchScreen(),
       onGenerateRoute: _generateRoute,
     );
   }
 
   Route? _generateRoute(RouteSettings settings) {
     final routes = <String, Widget>{
-      '/splash': const SplashScreen(), // Nova rota para a SplashScreen
+      '/splash': const SplashScreen(),
       '/onboarding': const OnboardingScreen(),
       '/login': const LoginScreen(),
       '/signup': const SignUpScreen(),
       '/forgotPassword': const ForgotPasswordScreen(),
+      '/setPassword': const SetPasswordScreen(),
     };
 
     Widget? page = routes[settings.name];

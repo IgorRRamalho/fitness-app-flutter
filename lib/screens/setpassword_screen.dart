@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
-class ForgotPasswordScreen extends StatelessWidget {
-  const ForgotPasswordScreen({super.key});
+class SetPasswordScreen extends StatelessWidget {
+  const SetPasswordScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +42,7 @@ class ForgotPasswordScreen extends StatelessWidget {
                         ),
                       ),
                       const Text(
-                        'Forgotten Password',
+                        'Set Password',
                         style: TextStyle(
                           fontFamily: 'Poppins',
                           fontSize: 22,
@@ -53,16 +53,6 @@ class ForgotPasswordScreen extends StatelessWidget {
                     ],
                   ),
                   const SizedBox(height: 40),
-                  const Text(
-                    'Forgot Password?',
-                    style: TextStyle(
-                      fontFamily: 'Poppins',
-                      fontSize: 20,
-                      fontWeight: FontWeight.w700,
-                      color: Colors.white,
-                    ),
-                  ),
-                  const SizedBox(height: 20),
                   const Padding(
                     padding: EdgeInsets.symmetric(horizontal: 40.0),
                     child: Text(
@@ -82,7 +72,7 @@ class ForgotPasswordScreen extends StatelessWidget {
             ),
           ),
           Expanded(
-            flex: 1,
+            flex: 2,
             child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 32),
               decoration: const BoxDecoration(
@@ -95,7 +85,7 @@ class ForgotPasswordScreen extends StatelessWidget {
                   const Align(
                     alignment: Alignment.centerLeft,
                     child: Text(
-                      'Enter your email address',
+                      'Password',
                       style: TextStyle(
                         fontFamily: 'League Spartan',
                         fontWeight: FontWeight.w500,
@@ -108,6 +98,7 @@ class ForgotPasswordScreen extends StatelessWidget {
                   SizedBox(
                     height: 45,
                     child: TextFormField(
+                      obscureText: true,
                       decoration: InputDecoration(
                         filled: true,
                         fillColor: Colors.white,
@@ -115,7 +106,44 @@ class ForgotPasswordScreen extends StatelessWidget {
                           borderRadius: BorderRadius.circular(15),
                           borderSide: BorderSide.none,
                         ),
-                        hintText: 'example@example.com',
+                        hintText: '*************',
+                        hintStyle: const TextStyle(
+                          color: Color(0xB3232323),
+                          fontWeight: FontWeight.w400,
+                          fontSize: 16,
+                          fontFamily: 'Poppins',
+                        ),
+                        contentPadding:
+                            const EdgeInsets.symmetric(horizontal: 10),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 15),
+                  const Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      'Confirm Password',
+                      style: TextStyle(
+                        fontFamily: 'League Spartan',
+                        fontWeight: FontWeight.w500,
+                        fontSize: 18,
+                        color: Color(0xFF232323),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 5),
+                  SizedBox(
+                    height: 45,
+                    child: TextFormField(
+                      obscureText: true,
+                      decoration: InputDecoration(
+                        filled: true,
+                        fillColor: Colors.white,
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(15),
+                          borderSide: BorderSide.none,
+                        ),
+                        hintText: '*************',
                         hintStyle: const TextStyle(
                           color: Color(0xB3232323),
                           fontWeight: FontWeight.w400,
@@ -140,29 +168,28 @@ class ForgotPasswordScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   const SizedBox(height: 50),
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      fixedSize: const Size(179, 44),
-                      backgroundColor: Colors.white.withOpacity(0.2),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(100),
-                        side: const BorderSide(color: Colors.white),
+                  SizedBox(
+                    width: 200,
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        padding: const EdgeInsets.symmetric(vertical: 12),
+                        backgroundColor: Colors.white.withOpacity(0.2),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(100),
+                          side: const BorderSide(color: Colors.white),
+                        ),
+                        shadowColor: Colors.transparent,
+                        elevation: 0,
                       ),
-                      shadowColor: Colors.transparent,
-                      elevation: 0,
-                    ),
-                    onPressed: () {
-                      Navigator.pushNamed(context, '/setPassword');
-                    },
-                    child: const Center(
-                      child: Text(
-                        'Continue',
+                      onPressed: () {},
+                      child: const Text(
+                        'Reset Password',
                         style: TextStyle(
                           fontFamily: 'Poppins',
                           color: Colors.white,
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
-                          overflow: TextOverflow.ellipsis,
+                          overflow: TextOverflow.visible,
                         ),
                       ),
                     ),

@@ -12,7 +12,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    // Aguarda 3 segundos antes de navegar para a tela de onboarding
+
     Future.delayed(const Duration(seconds: 3), () {
       Navigator.pushReplacementNamed(context, '/onboarding');
     });
@@ -51,14 +51,14 @@ class _SplashScreenState extends State<SplashScreen> {
                 const SizedBox(height: 10),
                 SvgPicture.asset(
                   'lib/assets/logofb.svg',
-                  width: 182.37, // Nova largura
-                  height: 84.76, // Nova altura
+                  width: 182.37,
+                  height: 84.76,
                 ),
                 const SizedBox(height: 20),
                 SvgPicture.asset(
                   'lib/assets/FITBODY.svg',
-                  width: 100, // Nova largura
-                  height: 40, // Nova altura
+                  width: 100,
+                  height: 40,
                 ),
               ],
             ),

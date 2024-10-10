@@ -12,7 +12,6 @@ class OnboardingScreenState extends State<OnboardingScreen> {
   final PageController _pageController = PageController();
   int _currentPage = 0;
 
-  // Listas para armazenar dados do onboarding
   final List<String> _titles = [
     'Start Your Journey Towards A More Active Lifestyle',
     'Find Nutrition Tips That Fit Your Lifestyle',
