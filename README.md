@@ -1,7 +1,7 @@
 
 # FitBody - Fitness App
 
-Este é o repositório do **FitBody**, um aplicativo de fitness desenvolvido em Flutter. O objetivo do FitBody é ajudar os usuários a embarcarem em uma jornada de vida saudável, oferecendo suporte em exercícios, alimentação e acompanhamento de metas.
+Este é o repositório do **FitBody**, um aplicativo de fitness desenvolvido em Flutter. Baseando se modelo do figma [Fitness-App-UI-Kit](https://www.figma.com/design/vkfIG0xAivxPtwYFYrj6lq/Fitness-App-UI-Kit-for-Gym-Workout-App-Fitness-Tracker-Mobile-App-Gym-Fitness-Mobile-App-UI-Kit-(Community)-(Copy)?node-id=3032-2305&t=n3jCvXmpHqkauLWY-1)
 
 ## Sumário
 
@@ -20,13 +20,9 @@ O FitBody é um aplicativo focado em ajudar usuários a atingir suas metas de fi
 ## Recursos
 
 - Onboarding com dicas de saúde
-- Criação de conta e login
+- Criação de conta e login(Somente telas e validação de dados)
 - Recuperação de senha
-- Criação de metas fitness personalizadas
-- Suporte a múltiplos idiomas (internacionalização)
 - Design responsivo e atrativo
-
-
 
 ## Instalação
 
@@ -82,14 +78,7 @@ O FitBody é um aplicativo focado em ajudar usuários a atingir suas metas de fi
      flutter run
      ```
 
-3. **Testes Automatizados**:
-   - Para executar testes unitários, use o comando:
-
-     ```bash
-     flutter test
-     ```
-
-4. **Localização (Localization)**:
+3. **Localização (Localization)**:
    - O app suporta múltiplos idiomas. Para testar a internacionalização, ajuste as configurações de idioma do dispositivo ou emulador e observe as mudanças de texto e layout no app.
 
 ## Tecnologias Utilizadas
@@ -97,8 +86,7 @@ O FitBody é um aplicativo focado em ajudar usuários a atingir suas metas de fi
 - **Flutter**: Framework principal para desenvolvimento do app.
 - **Dart**: Linguagem de programação usada com Flutter.
 - **SharedPreferences**: Para armazenamento local de dados do usuário.
-- **Fontes Customizadas**: Incluindo `Montserrat` para uma experiência de design consistente.
-- **Internacionalização**: Suporte a múltiplos idiomas com o uso de arb files.
+- **Fontes Customizadas**: Incluindo `Poppins` e  `League Spartan` para uma experiência de design consistente.
 
 ## Contribuições
 
